@@ -19,17 +19,17 @@ module Schemas
         merged_named_fields.errors(input)
       end
 
-      def param(name, type: Schemas::Fields::PassThroughField.new,
+      def param(name, type: Fields::PassThroughField.new,
                 required: true, validator: [], validators: [])
         validators = Array(validator) + validators
         type = ParamType.new(type, required, validators)
-        @params << Schemas::Fields::NamedFieldFromHash.new(name, type)
+        @params << Fields::NamedFieldFromHash.new(name, type)
       end
 
       private
 
       def merged_named_fields
-        Schemas::Fields::MergedNamedFields.new(@params)
+        Fields::MergedNamedFields.new(@params)
       end
     end
   end
