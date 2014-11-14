@@ -1,4 +1,4 @@
-require "schemas"
+require "spec_helper"
 
 class IntegerType
   def errors(string)

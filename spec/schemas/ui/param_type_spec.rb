@@ -1,4 +1,4 @@
-require "schemas/ui/param_type"
+require "spec_helper"
 
 describe Schemas::UI::ParamType do
 end

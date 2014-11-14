@@ -1,4 +1,4 @@
-require "schemas/types/type_with_validator"
+require "spec_helper"
 
 describe Schemas::Types::TypeWithValidator do
   let(:type) { double(:type, errors: []) }
