@@ -23,7 +23,7 @@ module Schemas
                 required: true, validator: [], validators: [])
         validators = Array(validator) + validators
         type = ParamType.new(type, required, validators)
-        @params << Param.new(name, type)
+        @params << Schemas::Fields::NamedFieldFromHash.new(name, type)
       end
 
       private

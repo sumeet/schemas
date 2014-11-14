@@ -10,7 +10,6 @@ require "schemas/fields/pass_through_field"
 require "schemas/fields/required_field"
 
 # ui
-require "schemas/ui/param.rb"
 require "schemas/ui/param_type.rb"
 require "schemas/ui/schema.rb"
 
