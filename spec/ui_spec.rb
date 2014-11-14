@@ -6,7 +6,7 @@ class IntegerType
       Integer(string)
       []
     rescue ArgumentError
-      [:invalid_integer]
+      [:not_an_integer]
     end
   end
 
@@ -25,18 +25,16 @@ end
 describe Schemas::UI do
   it "works" do
     schema = Schemas::UI::Schema.define do
-      param :id, required: true, type: IntegerType.new, validator: IsPositiveValidator.new
+      param :id, required: true, type: IntegerType.new,
+                 validator: IsPositiveValidator.new
       param :name, required: false
     end
 
     d = {:id => "123"}
     schema.parse(d).should == {:id => 123, :name => nil}
 
-    d = {:id => "123"}
-    schema.parse(d).should == {:id => 123, :name => nil}
-
     d = {:id => "hotjava9"}
-    schema.errors(d).should == {:id => [:invalid_integer]}
+    schema.errors(d).should == {:id => [:not_an_integer]}
 
     d = {}
     schema.errors(d).should == {:id => [:required]}
