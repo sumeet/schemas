@@ -16,4 +16,5 @@ require "schemas/ui/schema.rb"
 require "schemas/validators/validator_chain.rb"
 
 # types
+require "schemas/types/integer_type.rb"
 require "schemas/types/type_with_validator.rb"

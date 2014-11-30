@@ -19,14 +19,27 @@ module Schemas
         merged_named_fields.errors(input)
       end
 
-      def param(name, type: Fields::PassThroughField.new,
-                required: true, validator: [], validators: [])
-        validators = Array(validator) + validators
-        type = ParamType.new(type, required, validators)
-        @params << Fields::NamedFieldFromHash.new(name, type)
+      def required(name, *args)
+        type_with_validator = construct_field_from_params(*args)
+        required_field = Fields::RequiredField.new(type_with_validator)
+        @params << Fields::NamedFieldFromHash.new(name, required_field)
+      end
+
+      def optional(name, *args)
+        type_with_validator = construct_field_from_params(*args)
+        optional_field = Fields::NullWhenBlankField.new(type_with_validator)
+        @params << Fields::NamedFieldFromHash.new(name, optional_field)
       end
 
       private
+
+      def construct_field_from_params(type: Fields::PassThroughField.new,
+                                      required: true, validator: nil,
+                                      validators: [])
+        validator_chain = Validators::ValidatorChain.new(Array(validator) +
+                                                         validators)
+        Types::TypeWithValidator.new(type, validator_chain)
+      end
 
       def merged_named_fields
         Fields::MergedNamedFields.new(@params)
