@@ -1,8 +1,9 @@
 module Schemas
   module Fields
-    class NullWhenBlankField
-      def initialize(field)
+    class FieldWithDefault
+      def initialize(field, default)
         @field = field
+        @default = default
       end
 
       def errors(input)
@@ -11,8 +12,14 @@ module Schemas
       end
 
       def parse(input)
-        return nil if input.blank?
+        return use_default if input.blank?
         @field.parse(input)
+      end
+
+      private
+
+      def use_default
+        @default.is_a?(Proc) ? @default.call : @default
       end
     end
   end

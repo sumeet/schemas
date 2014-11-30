@@ -25,9 +25,12 @@ module Schemas
         @params << Fields::NamedFieldFromHash.new(name, required_field)
       end
 
-      def optional(name, *args)
-        type_with_validator = construct_field_from_params(*args)
-        optional_field = Fields::NullWhenBlankField.new(type_with_validator)
+      def optional(name, *args,
+                   default: raise("optional requires a default: param, " +
+                                  "either a value or a lambda"), **kwargs)
+        type_with_validator = construct_field_from_params(*args, **kwargs)
+        optional_field = Fields::FieldWithDefault.new(type_with_validator,
+                                                      default)
         @params << Fields::NamedFieldFromHash.new(name, optional_field)
       end
 

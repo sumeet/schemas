@@ -2,10 +2,10 @@ require 'active_support'
 require 'active_support/core_ext/object/blank'
 
 # fields
+require "schemas/fields/field_with_default"
 require "schemas/fields/merged_named_fields"
 require "schemas/fields/missing"
 require "schemas/fields/named_field_from_hash"
-require "schemas/fields/null_when_blank_field"
 require "schemas/fields/pass_through_field"
 require "schemas/fields/required_field"
 

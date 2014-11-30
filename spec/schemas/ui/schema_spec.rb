@@ -10,12 +10,22 @@ describe Schemas::UI::Schema do
     schema.errors({}).should == {name: [:required]}
   end
 
-  it "can define optional params" do
+  it "can have define optional params that have defaults" do
     schema = subject.define do
-      optional :name
+      optional :name, default: lambda { 4 },
+               type: Schemas::Types::IntegerType.new
     end
-    schema.errors({}).should == {}
-    schema.parse({}).should == {name: nil}
+
+    schema.parse(name: "12").should == {name: 12}
+    schema.parse({}).should == {name: 4}
+  end
+
+  it "requires a default for optional params" do
+    expect do
+      schema = subject.define do
+        optional :name
+      end
+    end.to raise_exception /optional requires a default: param/
   end
 
   it "can specify a type" do
