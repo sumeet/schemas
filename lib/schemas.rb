@@ -18,3 +18,9 @@ require "schemas/validators/validator_chain.rb"
 # types
 require "schemas/types/integer_type.rb"
 require "schemas/types/type_with_validator.rb"
+
+module Schemas
+  def self.define(*args, &block)
+    Schemas::UI::Schema.define(*args, &block)
+  end
+end
