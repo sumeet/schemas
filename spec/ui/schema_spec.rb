@@ -55,6 +55,15 @@ describe Schemas::UI::Schema do
     schema.errors({name: "-1"}).should == {name: [:must_be_positive,
                                                   :must_be_even]}
   end
+
+  it "raises an exception when parsing when there are errors" do
+    schema = subject.define do
+      required :name
+    end
+    expect do
+      schema.parse({})
+    end.to raise_exception(Schemas::UI::Schema::CannotParseWhenThereAreErrors)
+  end
 end
 
 class ValueMustBePositive

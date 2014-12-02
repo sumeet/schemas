@@ -12,6 +12,7 @@ module Schemas
       end
 
       def parse(input)
+        raise CannotParseWhenThereAreErrors if errors(input).any?
         merged_named_fields.parse(input)
       end
 
@@ -46,6 +47,9 @@ module Schemas
 
       def merged_named_fields
         Fields::MergedNamedFields.new(@params)
+      end
+
+      class CannotParseWhenThereAreErrors < StandardError
       end
     end
   end
