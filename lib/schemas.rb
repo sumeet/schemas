@@ -23,4 +23,6 @@ module Schemas
   def self.define(*args, &block)
     Schemas::UI::Schema.define(*args, &block)
   end
+
+  VERSION = "0.0.2"
 end
